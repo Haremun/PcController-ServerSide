@@ -5,11 +5,9 @@ import sun.misc.IOUtils;
 import javax.microedition.io.StreamConnection;
 
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
+import java.io.*;
 
 import javax.microedition.io.StreamConnection;
 
@@ -17,10 +15,6 @@ public class ProcessConnectionThread implements Runnable {
 
     private StreamConnection mConnection;
 
-    // Constant that indicate command from devices
-    private static final int EXIT_CMD = -1;
-    private static final int KEY_RIGHT = 1;
-    private static final int KEY_LEFT = 2;
 
     public ProcessConnectionThread(StreamConnection connection) {
         mConnection = connection;
@@ -60,17 +54,24 @@ public class ProcessConnectionThread implements Runnable {
         try {
             Robot robot = new Robot();
 
-            char symbol = '$';
-            int index = command.indexOf(symbol);
-            double first = Double.valueOf(command.substring(0, index));
-            double second = Double.valueOf(command.substring(index + 1));
+            if(command.equals("CLICK")){
+                robot.mousePress(InputEvent.BUTTON1_MASK);
+                robot.delay(50);
+                robot.mouseRelease(InputEvent.BUTTON1_MASK);
+            } else {
+                char symbol = '$';
+                int index = command.indexOf(symbol);
+                double first = Double.valueOf(command.substring(0, index));
+                double second = Double.valueOf(command.substring(index + 1));
 
-            Point mousePosition = MouseInfo.getPointerInfo().getLocation();
+                Point mousePosition = MouseInfo.getPointerInfo().getLocation();
 
-            int x = (int)(mousePosition.getX() + first);
-            int y = (int)( mousePosition.getY() + second);
+                int x = (int)(mousePosition.getX() + first);
+                int y = (int)( mousePosition.getY() + second);
 
-            robot.mouseMove(x, y);
+                robot.mouseMove(x, y);
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -6,21 +6,33 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+import javax.microedition.io.StreamConnection;
+
+public class Main extends Application implements ConnectionCallback {
+
+    ScreenCaptureThread screenCaptureThread;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         //primaryStage.show();
 
-        Thread waitThread = new Thread(new WaitThread());
-        waitThread.start();
+        Thread thread = new Thread(new BluetoothConnectionThread(this));
+        thread.start();
+
+        screenCaptureThread = new ScreenCaptureThread();
+        screenCaptureThread.start();
     }
 
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void onConnected(StreamConnection connection) {
+        screenCaptureThread.setConnection(connection);
     }
 }

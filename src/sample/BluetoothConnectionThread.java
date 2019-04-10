@@ -7,10 +7,13 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 import javax.microedition.io.StreamConnectionNotifier;
 
-public class WaitThread implements Runnable {
+public class BluetoothConnectionThread implements Runnable {
+
+    private ConnectionCallback connectionCallback;
 
     /** Constructor */
-    public WaitThread() {
+    public BluetoothConnectionThread(ConnectionCallback callback) {
+        this.connectionCallback = callback;
     }
 
     @Override
@@ -44,8 +47,9 @@ public class WaitThread implements Runnable {
                 System.out.println("waiting for connection...");
                 connection = notifier.acceptAndOpen();
                 System.out.println("accepted");
-                Thread processThread = new Thread(new ProcessConnectionThread(connection));
-                processThread.start();
+                connectionCallback.onConnected(connection);
+                //Thread processThread = new Thread(new ProcessConnectionThread(connection));
+                //processThread.start();
             } catch (Exception e) {
                 e.printStackTrace();
                 return;
