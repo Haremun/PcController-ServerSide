@@ -21,7 +21,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="BluetoothServer" target="1.8" />
-      <module name="pccontroller_serverside" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
