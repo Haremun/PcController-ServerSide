@@ -1,30 +1,26 @@
-package sample;
-
-import sun.misc.IOUtils;
+package java;
 
 import javax.microedition.io.StreamConnection;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.io.*;
-
-import javax.microedition.io.StreamConnection;
 
 public class ProcessConnectionThread implements Runnable {
 
     private StreamConnection mConnection;
+    private InputStream inputStream;
 
-
-    public ProcessConnectionThread(StreamConnection connection) {
+    public ProcessConnectionThread(StreamConnection connection, InputStream inputStream) {
         mConnection = connection;
+        this.inputStream = inputStream;
     }
 
     @Override
     public void run() {
         try {
             // prepare to receive data
-            InputStream inputStream = mConnection.openInputStream();
+            //InputStream inputStream = mConnection.openInputStream();
 
             System.out.println("waiting for input");
 
@@ -33,7 +29,7 @@ public class ProcessConnectionThread implements Runnable {
 
                 //int temp = inputStream.read();
                 String command;
-                while ((command = reader.readLine()) != null){
+                while ((command = reader.readLine()) != null) {
                     processCommand(command);
                     System.out.println(command);
                 }
@@ -54,7 +50,7 @@ public class ProcessConnectionThread implements Runnable {
         try {
             Robot robot = new Robot();
 
-            if(command.equals("CLICK")){
+            if (command.equals("CLICK")) {
                 robot.mousePress(InputEvent.BUTTON1_MASK);
                 robot.delay(50);
                 robot.mouseRelease(InputEvent.BUTTON1_MASK);
@@ -66,8 +62,8 @@ public class ProcessConnectionThread implements Runnable {
 
                 Point mousePosition = MouseInfo.getPointerInfo().getLocation();
 
-                int x = (int)(mousePosition.getX() + first);
-                int y = (int)( mousePosition.getY() + second);
+                int x = (int) (mousePosition.getX() + first);
+                int y = (int) (mousePosition.getY() + second);
 
                 robot.mouseMove(x, y);
             }

@@ -1,4 +1,4 @@
-package sample;
+package java;
 
 import javax.bluetooth.DiscoveryAgent;
 import javax.bluetooth.LocalDevice;

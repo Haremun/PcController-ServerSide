@@ -10,11 +10,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/bluecove-2.1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../bluecove-2.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="bluecove-2.1.1" level="project" />
   </component>
 </module>
