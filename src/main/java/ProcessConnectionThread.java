@@ -1,5 +1,3 @@
-package java;
-
 import javax.microedition.io.StreamConnection;
 
 import java.awt.*;
